@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+header, footer {
+  background: #004d40;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+#map {
+  height: calc(100vh - 120px);
+  width: 100%;
+}
+
+footer {
+  font-size: 0.9em;
+}
