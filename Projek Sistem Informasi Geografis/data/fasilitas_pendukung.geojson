@@ -1,0 +1,6 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {"type":"Feature","properties":{"nama":"SD Islam Al Azhar 7 Sukabumi","jenis":"Sekolah Dasar","role":"Fasilitas","foto_url": "../assets/image/sdaladzhar.jpg"},"geometry":{"type":"Point","coordinates":[106.93059231423871,-6.91308553191699]}}
+  ]
+}

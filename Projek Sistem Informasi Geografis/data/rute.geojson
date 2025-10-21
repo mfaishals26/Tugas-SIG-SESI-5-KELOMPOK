@@ -1,0 +1,27 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "nama": "Rute Jalan Jajanan",
+        "deskripsi": "Rute SD ISLAM AL AZHAR 7 SUKABUMI Ke Es Doger \"LEGIT\"",
+        "jarak": "22 m"
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            106.93059885395576,
+            -6.913095376098255
+          ],
+          [
+            106.93073464712205,
+            -6.913237996844103
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": 64
+    }
+  ]
+}

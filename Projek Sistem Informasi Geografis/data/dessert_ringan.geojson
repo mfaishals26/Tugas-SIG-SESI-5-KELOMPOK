@@ -1,0 +1,8 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {"type":"Feature","properties":{"nama":"Roti Kukus Bakar Assyifa","jenis":"Dessert","produk_utama":"Roti Kukus","role":"Makanan","foto_url": "../assets/image/rotikukus.jpg"},"geometry":{"type":"Point","coordinates":[106.92987632004785,-6.91239256138418]}},
+    {"type":"Feature","properties":{"nama":"Kaybun Dimsum Sukabumi","jenis":"Makanan Ringan","produk_utama":"Dimsum","role":"Makanan","foto_url": "../assets/image/kaybun.jpg"},"geometry":{"type":"Point","coordinates":[106.93009799277183,-6.91251105209501]}},
+    {"type":"Feature","properties":{"nama":"Rumah Puding Premium dan Pusat Oleh-Oleh di Sukabumi","jenis":"Dessert","produk_utama":"Puding","role":"Makanan","foto_url": "../assets/image/rumahpuding.jpg"},"geometry":{"type":"Point","coordinates":[106.9210031522171,-6.91113586512265]}}
+  ]
+}

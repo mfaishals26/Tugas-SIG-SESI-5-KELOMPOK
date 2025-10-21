@@ -1,0 +1,8 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {"type":"Feature","properties":{"nama":"Wedrink Bhayangkara Sukabumi","jenis":"Minuman","produk_utama":"Es Krim","role":"Minuman","foto_url": "../assets/image/Wedrink.jpg"},"geometry":{"type":"Point","coordinates":[106.93193081389929,-6.91262299780484]}},
+    {"type":"Feature","properties":{"nama":"Es Doger LEGIT","jenis":"Minuman","produk_utama":"Es Doger","role":"Minuman","foto_url": "../assets/image/doger.jpg"},"geometry":{"type":"Point","coordinates":[106.93073424407177,-6.91324196604688]}},
+    {"type":"Feature","properties":{"nama":"Jus Kode Sukabumi","jenis":"Minuman","produk_utama":"Jus Buah","role":"Minuman","foto_url": "../assets/image/juskode.jpg"},"geometry":{"type":"Point","coordinates":[106.93017265061522,-6.91256502781519]}}
+  ]
+}
