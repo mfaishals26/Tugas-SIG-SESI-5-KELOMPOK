@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Oleh-Oleh Kota Sukabumi</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/assets/image/Logo.icon">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../CSS/style.css" />
+
+  <!-- SweetAlert2 (untuk form ulasan yang keren) -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body class="glow-mode">
+  <!-- 🌟 HEADER -->
+  <header class="site-header">
+    <div class="brand">
+      <img src="/assets/image/logo oleh oleh.jpg" alt="logo" class="brand-img" />
+      <div>
+        <h1>SIG Oleh-Oleh Kota Sukabumi</h1>
+        <div class="subtitle">Peta Interaktif • Kuliner & Cendera Mata</div>
+      </div>
+    </div>
+
+    <div class="header-controls">
+    <!-- Tombol sidebar -->
+    <button id="sidebar-toggle" class="btn icon-btn" title="Buka/Tutup Panel">
+        <i class="fa fa-bars"></i>
+    </button>
+
+      <!-- 🌗 Tombol Ganti Tema -->
+    <button id="theme-toggle" class="btn icon-btn" title="Ganti Tema">
+      <i class="fa fa-sun"></i>
+    </button>
+  </header>
+  
+  <!-- 🌌 SIDEBAR -->
+  <aside id="sidebar" class="sidebar closed" aria-hidden="true">
+    <div class="sidebar-inner">
+      <div class="sidebar-header">
+        <h2>PANEL KONTROL</h2>
+        <button id="close-sidebar" class="btn small ghost" title="Tutup Panel">✕</button>
+      </div>
+      
+      <!-- Layer Control -->
+      <section class="panel-section">
+        <h3>Layer Peta</h3>
+        <div id="layer-checkboxes" class="layer-list">
+          <!-- Akan diisi JS -->
+        </div>
+      </section>
+
+      <!-- Smart Search -->
+      <section class="panel-section">
+        <h3>Pencarian Cerdas</h3>
+        <input id="search-input" type="text" placeholder="Cari toko, makanan, atau kategori..." />
+        <div id="search-results" class="search-results"></div>
+      </section>
+
+      <!-- Info Section -->
+      <section class="panel-section small-info">
+        <h3>Petunjuk</h3>
+        <p>Klik marker untuk melihat detail, memberi rating, dan komentar.  
+        Gunakan layer untuk filter kategori.</p>
+      </section>
+    </div>
+  </aside>
+
+  <!-- 🌈 LOADING SCREEN -->
+  <div id="loading-screen">
+    <div class="dreamwave-bg"></div>
+    <div class="petal-container"></div>
+    <div class="sparkle-container"></div>
+
+    <div class="loading-content">
+      <img src="/assets/image/Mochi.jpg" alt="Logo" class="loading-logo" />
+      <h1 class="loading-title">Memuat Cita Rasa Sukabumi</h1>
+      <p class="loading-sub">Menyiapkan keajaiban rasa...</p>
+    </div>
+  </div>
+
+  <!-- 🌅 TRANSITION LIGHT -->
+  <div id="transition-light">
+    <div class="glow-layer"></div>
+    <div class="bloom-sparkles"></div>
+  </div>
+
+  <!-- 🗺️ MAP AREA -->
+  <main id="main-content" class="main-with-sidebar">
+    <div id="map" role="application" aria-label="Peta oleh-oleh Sukabumi"></div>
+  </main>
+
+  <!-- 🌟 FOOTER -->
+  <footer class="site-footer">
+    <div>© 2025 Group Project — SIG Oleh-Oleh Kota Sukabumi</div>
+  </footer>
+
+  <!-- ⚠️ CUSTOM ALERT -->
+  <div id="alert-overlay"></div>
+  <div id="custom-alert" class="alert-toast">
+    ⚠️ Kamu mengklik area di luar batas Kota Sukabumi!
+  </div>
+
+  <!-- 💫 FLOATING LIGHT EFFECT -->
+  <div class="floating-glow"></div>
+
+  <!-- 🔗 JS LIBRARIES -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+
+  </script>
+  <!-- 📜 MAIN SCRIPT -->
+  <script src="../JS/main.js"></script>
+  
+</body>
+</html>

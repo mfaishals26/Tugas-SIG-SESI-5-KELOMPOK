@@ -1,0 +1,1111 @@
+/* === STYLE (klasik lembut) === */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+  /* ☀️ Tema Terang (Latte Pastel) */
+  --accent: #b08968;
+  --accent-dark: #8b5e3c;
+  --bg: linear-gradient(180deg, #fffaf3 0%, #f9f3e8 100%);
+  --card: rgba(255, 250, 243, 0.9);
+  --text: #4a3f35;
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  --glow-color: rgba(255, 214, 170, 0.4);
+}
+
+/* === 🌟 HEADER STYLING === */
+.site-header {
+  background: var(--header-bg, var(--card));
+  color: var(--text);
+  box-shadow: 0 4px 20px var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  transition: all 0.4s ease, background 0.5s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.site-header .brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.site-header .brand-img {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 10px var(--glow-color);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.site-header .brand-img:hover {
+  transform: rotate(-5deg) scale(1.05);
+  box-shadow: 0 0 20px var(--glow-color);
+}
+
+.site-header h1 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text);
+  text-shadow: 0 0 6px rgba(0,0,0,0.05);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.site-header .subtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary, #6e5b4b);
+  opacity: 0.85;
+  letter-spacing: 0.3px;
+  transition: color 0.4s ease, opacity 0.4s ease;
+}
+
+/* 🌙 Glow Dark Theme override */
+[data-theme="dark"] .site-header {
+  --header-bg: radial-gradient(circle at top, #1e1b17, #12100d);
+  --text: #f4e9da;
+  --text-secondary: #d9c6ad;
+  box-shadow: 0 0 25px rgba(255, 200, 150, 0.15);
+}
+
+[data-theme="dark"] .site-header .brand-img {
+  box-shadow: 0 0 16px var(--glow-color);
+}
+
+[data-theme="dark"] .site-header h1 {
+  text-shadow: 0 0 10px rgba(255, 180, 100, 0.4);
+}
+
+[data-theme="dark"] .site-header .subtitle {
+  opacity: 1;
+}
+
+/* 🌙 Tema Gelap (Glow Dark) */
+body.dark-theme {
+  --accent: #ffb86c;
+  --accent-dark: #ff9f40;
+  --bg: linear-gradient(180deg, #1e1b18 0%, #2b2622 100%);
+  --card: rgba(43, 38, 34, 0.9);
+  --text: #f7ede2;
+  --shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
+  --glow-color: rgba(255, 184, 108, 0.35);
+}
+
+/* ===== RESET ===== */
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: background 1s ease, color 0.8s ease;
+}
+
+/* 🌈 Animasi Glow lembut di background */
+body.dark-theme::before {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, var(--glow-color), transparent 70%);
+  animation: slowGlow 10s ease-in-out infinite alternate;
+  z-index: -1;
+  pointer-events: none;
+}
+@keyframes slowGlow {
+  from { transform: scale(1) rotate(0deg); opacity: 0.6; }
+  to { transform: scale(1.2) rotate(10deg); opacity: 0.9; }
+}
+
+/* 🌟 Card dan panel */
+.card, .panel, .popup, .sidebar {
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+  transition: background 0.6s ease, box-shadow 0.6s ease, transform 0.3s ease;
+}
+.card:hover, .panel:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px var(--glow-color);
+}
+
+/* 🔘 Tombol */
+button, .btn {
+  background: var(--accent);
+  color: var(--text);
+  border: none;
+  border-radius: 12px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.25s, box-shadow 0.4s;
+}
+button:hover {
+  background: var(--accent-dark);
+  transform: scale(1.06);
+  box-shadow: 0 0 15px var(--glow-color);
+}
+
+/* ✨ Efek klik pulse */
+button:active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--glow-color);
+  opacity: 0.5;
+  animation: pulse 0.4s ease-out;
+}
+@keyframes pulse {
+  from { transform: scale(1); opacity: 0.8; }
+  to { transform: scale(1.6); opacity: 0; }
+}
+
+/* 🌙 Tombol Ganti Tema */
+.theme-toggle-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: var(--accent);
+  color: var(--text);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--glow-color);
+  transition: transform 0.4s, box-shadow 0.4s, background 0.4s;
+  z-index: 9999;
+}
+.theme-toggle-btn:hover {
+  transform: rotate(25deg) scale(1.1);
+  box-shadow: 0 0 20px var(--glow-color);
+}
+
+/* 🌌 Smooth fade antar tema */
+@keyframes themeFade {
+  from { opacity: 0; filter: blur(10px); }
+  to { opacity: 1; filter: blur(0); }
+}
+body.theme-transition * {
+  animation: themeFade 0.6s ease;
+}
+
+
+/* header */
+.site-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 20px;
+  background: var(--card);
+  border-bottom: 3px solid var(--accent);
+  box-shadow: var(--shadow);
+}
+.brand{display:flex;gap:12px;align-items:center}
+.brand-img{width:52px;height:52px;border-radius:50%;border:2px solid var(--accent-dark);object-fit:cover}
+.site-header h1{font-size:1.2rem;color:var(--accent-dark)}
+.subtitle{font-size:0.8rem;color:rgba(0,0,0,0.6)}
+
+/* header controls */
+.header-controls{display:flex;gap:8px;align-items:center}
+.btn{background:var(--accent);color:#fff;padding:8px 10px;border-radius:10px;border:none;cursor:pointer;font-weight:600;box-shadow:var(--shadow)}
+.icon-btn{width:42px;height:42px;display:flex;align-items:center;justify-content:center;padding:8px}
+
+/* layout: sidebar + main content */
+.sidebar{
+  position: absolute;
+  top:84px;
+  left:20px;
+  width:320px;
+  height: calc(100vh - 150px);
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding:12px;
+  z-index:1100;
+  transform: translateX(0);
+  transition: transform 0.35s cubic-bezier(.2,.9,.2,1), opacity .25s;
+  overflow:auto;
+}
+.sidebar.closed{ transform: translateX(-360px); opacity:0; pointer-events:none;}
+.sidebar-inner{padding:4px}
+.sidebar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.sidebar h2{font-size:0.95rem;color:var(--accent-dark)}
+.btn.small{padding:6px 8px;font-size:0.85rem;border-radius:8px}
+.btn.ghost{background:transparent;border:2px solid var(--accent);color:var(--accent)}
+
+/* panel sections */
+.panel-section{margin:10px 0}
+.panel-section h3{font-size:0.9rem;color:var(--accent-dark);margin-bottom:6px;border-bottom:1px dashed rgba(0,0,0,0.06);padding-bottom:6px}
+.layer-list{display:flex;flex-direction:column;gap:8px}
+.layer-item{display:flex;align-items:center;gap:10px}
+/* === Custom Checkbox Modern Glow === */
+.layer-item input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  margin-right: 8px;
+}
+
+.layer-item input[type="checkbox"]:checked {
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--glow-color);
+  border-color: var(--accent-dark);
+}
+
+.layer-item input[type="checkbox"]:hover {
+  transform: scale(1.1);
+}
+
+.layer-item input[type="checkbox"]:checked::after {
+  content: "✔";
+  position: absolute;
+  top: 0;
+  left: 3px;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.layer-item label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* search */
+#search-input{width:100%;padding:8px;border-radius:10px;border:1px solid #e6d6bd;background:#fff}
+.search-result {
+  padding:10px;
+  border-radius:10px;
+  background:#fffaf3;
+  border:1px solid #e0c9a6;
+  margin-bottom:8px;
+  cursor:pointer;
+  color:#4a3f35; /* 🌟 Tambahin warna teks */
+  font-weight:500;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.search-result:hover {
+  background:#f5e9d6;
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(176,137,104,0.2);
+  color:#8b5e34; /* 🌈 efek highlight */
+}
+
+[data-theme="dark"] .search-result {
+  background: rgba(40, 35, 30, 0.9);
+  border: 1px solid rgba(215,179,119,0.3);
+  color: #fff3e1;
+}
+
+[data-theme="dark"] .search-result:hover {
+  background: rgba(215,179,119,0.15);
+  color: #ffce8a;
+}
+
+
+/* main map area */
+.main-with-sidebar{flex:1;display:block;transition:margin-left .35s cubic-bezier(.2,.9,.2,1)}
+/* when sidebar open, push map to right */
+.sidebar-open ~ .main-with-sidebar{margin-left:360px}
+
+/* map container */
+#map{width:100%;height:calc(100vh - 150px);border-top:2px solid var(--accent);border-bottom:2px solid var(--accent);box-shadow:inset 0 0 12px rgba(0,0,0,0.03);transition:all .25s}
+
+/* footer */
+.site-footer{background:var(--card);padding:10px 12px;text-align:center;border-top:3px solid var(--accent);box-shadow:var(--shadow)}
+
+/* responsive */
+@media(max-width:900px){
+  .sidebar{width:90%;left:5%;top:80px;height:calc(100vh - 160px)}
+  .sidebar.closed{transform:translateX(-200%);opacity:0}
+  .sidebar-open ~ .main-with-sidebar{margin-left:0}
+}
+
+/* 🌾 Pastel Latte Loading Screen */
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+
+  /* Gradasi pastel dengan tone kopi susu */
+  background: linear-gradient(135deg, #f4ede4, #e6d5c3, #b08968);
+  background-size: 200% 200%;
+  animation: gradientFlow 9s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 🌤 Cahaya lembut */
+.dreamwave-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.6), transparent 70%);
+  filter: blur(100px);
+  z-index: 1;
+}
+
+/* ✨ Sparkle lembut */
+.sparkle-container::before, .sparkle-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 2px);
+  background-size: 70px 70px;
+  animation: sparkleDrift 6s linear infinite;
+  opacity: 0.35;
+}
+.sparkle-container::after {
+  animation-direction: reverse;
+  opacity: 0.25;
+}
+
+@keyframes sparkleDrift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-50px, -50px); }
+}
+
+/* 🍂 Petal (ubah jadi daun kopi halus pastel) */
+.petal-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.petal {
+  position: absolute;
+  top: -10%;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(ellipse at center, #d9b99b 40%, transparent 100%);
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* ☕ Konten utama */
+.loading-content {
+  text-align: center;
+  z-index: 3;
+  animation: fadeIn 2s ease-out;
+}
+
+.loading-logo {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: white;
+  padding: 10px;
+  box-shadow: 0 0 20px rgba(176, 137, 104, 0.5);
+  animation: floatLogo 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(176, 137, 104, 0.4));
+}
+
+@keyframes floatLogo {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.loading-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #b08968;
+  text-shadow: 0 0 12px rgba(176, 137, 104, 0.4);
+  margin-top: 18px;
+  animation: textPulse 3s ease-in-out infinite;
+}
+
+.loading-sub {
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  color: #6e5b4b;
+  opacity: 0.8;
+  margin-top: 8px;
+}
+
+@keyframes textPulse {
+  0%, 100% { text-shadow: 0 0 6px rgba(176,137,104,0.3); }
+  50% { text-shadow: 0 0 14px rgba(176,137,104,0.6); }
+}
+
+/* 🌫 Fade-out transition */
+.fade-out {
+  animation: fadeOutAnime 1.2s ease forwards;
+}
+
+@keyframes fadeOutAnime {
+  to { opacity: 0; visibility: hidden; }
+}
+
+/* 🌅 TRANSISI CAHAYA MASUK KE PETA */
+#transition-light {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #ffeedd 0%, #b08968 80%);
+  opacity: 0;
+  transform: scale(1.1);
+  z-index: 9997;
+  pointer-events: none;
+}
+
+.glow-layer {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 80%);
+  filter: blur(40px);
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+.bloom-sparkles::before, .bloom-sparkles::after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: 
+    radial-gradient(circle, rgba(255,255,255,0.7) 0%, transparent 60%) 0 0,
+    radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 70%) 50% 50%,
+    radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 80%) 100% 100%;
+  background-size: 33% 33%;
+  animation: sparkleFloat 6s linear infinite;
+  opacity: 0;
+}
+
+@keyframes sparkleFloat {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(45deg); }
+  100% { transform: translateY(0) rotate(90deg); }
+}
+
+/* 🌈 Saat aktif */
+.transition-active {
+  opacity: 1 !important;
+  transform: scale(1);
+  animation: lightFade 3s ease forwards;
+}
+
+@keyframes lightFade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+
+/* 🌸 Peta muncul lembut setelah cahaya */
+#map {
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity 1.8s ease, transform 1.8s ease;
+}
+
+.map-visible {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+  transition: opacity 1.8s ease, transform 1.8s ease;
+}
+
+/* Tooltip */
+.custom-tooltip {
+  background: rgba(50,50,50,0.9);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Popup */
+.popup-content {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+}
+.popup-content h3 {
+  margin-top: 5px;
+  color: #b23b3b;
+  font-size: 16px;
+}
+.popup-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* ✨ FIX: Animasi & efek tampil alert toast */
+.alert-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 40px);
+  background: rgba(20, 20, 20, 0.88);
+  color: #fff;
+  padding: 18px 28px;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s cubic-bezier(.25,.8,.25,1);
+  z-index: 99999;
+}
+
+.alert-toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+/* 🔴 Overlay merah — biar kelihatan sekilas saat klik di luar */
+#alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 0, 0, 0.25);
+  z-index: 99998;
+  display: none;
+  animation: flashScreen 0.6s ease;
+}
+
+@keyframes flashScreen {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* 🌸 Form overlay tambah lokasi */
+.form-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(240, 234, 230, 0.8);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.4s ease;
+}
+
+.form-popup {
+  background: #fff8f4;
+  border: 2px solid #b08968;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  animation: scaleUp 0.3s ease;
+}
+
+.form-popup h3 {
+  color: #b08968;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.form-popup input,
+.form-popup textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1.5px solid #d2b48c;
+  font-size: 14px;
+}
+
+.preview-img {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 6px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.btn-primary {
+  background: #b08968;
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: #ddd;
+  border: none;
+  color: #333;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.popup-img {
+  width: 160px;
+  border-radius: 8px;
+  margin-top: 6px;
+}
+
+/* Animasi lembut */
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+@keyframes scaleUp {
+  from { transform: scale(0.8) }
+  to { transform: scale(1) }
+}
+
+/* 🌟 Popup Card Desain Modern */
+.popup-card {
+  width: 240px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  overflow: hidden;
+  animation: popupFade 0.6s ease forwards;
+  font-family: "Poppins", sans-serif;
+}
+
+@keyframes popupFade {
+  from { opacity: 0; transform: translateY(12px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #8b5e34, #d7b377);
+  color: #fff;
+  padding: 8px 12px;
+}
+
+.popup-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.popup-category {
+  font-size: 11px;
+  background: rgba(255,255,255,0.2);
+  padding: 3px 6px;
+  border-radius: 6px;
+}
+
+.popup-body {
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.popup-image {
+  width: 100%;
+  height: 120px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  margin-bottom: 8px;
+  transition: transform 0.3s ease;
+}
+
+.popup-image:hover {
+  transform: scale(1.05);
+}
+
+.popup-address {
+  font-size: 12px;
+  color: #333;
+  margin: 0;
+}
+
+.popup-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 10px 10px;
+}
+
+.btn-detail,
+.btn-share {
+  flex: 1;
+  font-size: 11px;
+  padding: 6px;
+  margin: 0 3px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-detail {
+  background: #8b5e34;
+  color: #fff;
+}
+
+.btn-detail:hover {
+  background: #a67648;
+}
+
+.btn-share {
+  background: #e0d1b6;
+  color: #6b4a2b;
+}
+
+.btn-share:hover {
+  background: #f2e3c9;
+}
+
+/* Detail Modal */
+.detail-popup img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  object-fit: cover;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.detail-popup p {
+  text-align: left;
+  color: #4b3b29;
+  font-size: 14px;
+}
+
+/* === POPUP CARD === */
+.custom-popup .leaflet-popup-content-wrapper {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  animation: popupFloat 0.6s ease-out;
+}
+
+@keyframes popupFloat {
+  from { opacity: 0; transform: translateY(10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.popup-card {
+  font-family: 'Poppins', sans-serif;
+  color: #3a2d1c;
+}
+
+.popup-img-wrapper {
+  overflow: hidden;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  height: 150px;
+}
+
+.popup-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.popup-img:hover {
+  transform: scale(1.1);
+}
+
+.popup-content {
+  padding: 10px 14px;
+}
+
+.popup-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #4a3728;
+}
+
+.popup-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.popup-tag {
+  background: #f4dcb5;
+  padding: 3px 8px;
+  border-radius: 8px;
+}
+
+.popup-rating {
+  color: #f6b800;
+}
+
+.popup-desc {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #5c4a35;
+}
+
+.popup-footer {
+  padding: 8px 14px 12px;
+  text-align: right;
+}
+
+.btn-detail {
+  background: linear-gradient(135deg, #8b5e34, #d7b377);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-detail:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(215,179,119,0.8);
+}
+
+/* 💬 Tombol Ulasan (Sama gaya dengan Lihat Detail) */
+.btn-review {
+  background: linear-gradient(135deg, #8b5e34, #d7b377);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 6px;
+  box-shadow: 0 0 10px rgba(215,179,119,0.4);
+  transition: transform 0.3s, box-shadow 0.3s, background 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-review:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #a67648, #e6c78b);
+  box-shadow: 0 0 12px rgba(215,179,119,0.8);
+}
+
+/* 🌙 Dark mode adaptasi */
+[data-theme="dark"] .btn-review {
+  background: linear-gradient(135deg, #d7b377, #8b5e34);
+  color: #fff4e6;
+  box-shadow: 0 0 14px rgba(215,179,119,0.45);
+}
+
+[data-theme="dark"] .btn-review:hover {
+  background: linear-gradient(135deg, #e6c78b, #a67648);
+  box-shadow: 0 0 20px rgba(215,179,119,0.75);
+  transform: scale(1.08);
+}
+
+/* === 💬 Styling Form Ulasan SweetAlert === */
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  padding-top: 6px;
+}
+
+.review-form label {
+  font-weight: 600;
+  color: var(--accent-dark);
+  font-size: 0.95rem;
+}
+
+/* Dropdown Rating */
+.review-form select {
+  border: 1px solid var(--accent);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  color: var(--text);
+  outline: none;
+}
+
+.review-form select:hover {
+  box-shadow: 0 0 10px rgba(176, 137, 104, 0.3);
+}
+
+/* Textarea */
+.review-text {
+  width: 100%;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text);
+  padding: 10px;
+  font-size: 0.95rem;
+  resize: none;
+  min-height: 90px;
+  transition: all 0.3s ease;
+}
+
+.review-text:focus {
+  box-shadow: 0 0 12px rgba(176, 137, 104, 0.3);
+  border-color: var(--accent-dark);
+}
+
+/* === 🌙 Dark Mode Override === */
+[data-theme="dark"] .swal2-popup {
+  background: linear-gradient(180deg, #1f1a16 0%, #12100d 100%) !important;
+  color: #fff3e1;
+  box-shadow: 0 0 25px rgba(255, 210, 150, 0.12);
+}
+
+[data-theme="dark"] .review-form label {
+  color: #f4e9da;
+}
+
+[data-theme="dark"] .review-form select,
+[data-theme="dark"] .review-text {
+  background: rgba(40, 35, 30, 0.85);
+  border: 1px solid rgba(215, 179, 119, 0.4);
+  color: #fff2d5;
+}
+
+[data-theme="dark"] .review-form select:hover,
+[data-theme="dark"] .review-text:focus {
+  border-color: #e6c78b;
+  box-shadow: 0 0 14px rgba(215, 179, 119, 0.3);
+}
+
+/* === SweetAlert Detail Popup === */
+.detail-popup img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.detail-popup p {
+  text-align: left;
+  margin: 4px 0;
+}
+
+/* Efek animasi popup */
+.fade-in-scale {
+  animation: fadeInScale 0.4s ease-out;
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Popup style enhancement */
+.leaflet-popup-content-wrapper {
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+  overflow: hidden;
+  animation: popupGlow 3s infinite alternate;
+}
+
+@keyframes popupGlow {
+  from { box-shadow: 0 4px 18px rgba(180,130,80,0.3); }
+  to { box-shadow: 0 4px 22px rgba(180,100,40,0.6); }
+}
+
+/* Detail popup SweetAlert */
+.detail-popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detail-img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.detail-info {
+  text-align: left;
+  font-size: 0.95rem;
+  color: #3e2a1d;
+}
+
+.detail-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+.detail-desc {
+  font-style: italic;
+  margin-top: 8px;
+  color: #654321;
+}
