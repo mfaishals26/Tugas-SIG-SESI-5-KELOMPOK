@@ -10,6 +10,7 @@
 // --- Inisialisasi peta ---
 const map = L.map('map', { zoomControl: true }).setView([-6.9205, 106.9289], 13);
 
+
 // --- 🌸 FITUR TAMBAH TITIK OLEH-OLEH (validasi + upload gambar) ---
 let tempMarker = null;
 
@@ -45,6 +46,41 @@ function isPointInsideKota(latlng) {
 
   return inside;
 }
+
+// 📍 Tombol "Lokasi Saya"
+document.getElementById('locate-me').addEventListener('click', function() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        const userLat = position.coords.latitude;
+        const userLng = position.coords.longitude;
+
+        // 🗺️ Lokasi pengguna
+        const userLocation = L.latLng(userLat, userLng);
+
+        // 🔹 Tambahkan marker dengan popup + tooltip
+        const marker = L.marker(userLocation)
+          .addTo(map)
+          .bindPopup("Lokasi Anda")
+          .bindTooltip("Ini posisi Anda sekarang", {
+            permanent: false,
+            direction: "top",
+            offset: [0, -8],
+          })
+          .openPopup();
+
+        // 🔹 Pindahkan tampilan map ke lokasi pengguna
+        map.setView(userLocation, 15);
+      },
+      function() {
+        alert("Tidak dapat mengakses lokasi. Pastikan GPS aktif.");
+      }
+    );
+  } else {
+    alert("Browser Anda tidak mendukung geolokasi.");
+  }
+});
+
 
 /** Form tambah lokasi */
 function showAddLocationForm(lat, lng) {
@@ -169,7 +205,7 @@ const fileMap = {
   "Batas Lokasi": "../Data/batas_lokasi.geojson",
   "Makanan Khas": "../Data/makanan_khas.geojson",
   "Kuliner Siap Saji": "../Data/kuliner_siap_saji.geojson",
-  "Dessert & Ringan": "../Data/dessert_ringan.geojson",
+  "Dessert & Makanan Ringan": "../Data/dessert_ringan.geojson",
   "Minuman": "../Data/minuman.geojson",
   "Fasilitas Pendukung": "../Data/fasilitas_pendukung.geojson",
   "Rute": "../Data/rute.geojson"
@@ -215,18 +251,11 @@ const icons = {
 
 
 // --- Popup builder ---
-function onEachFeature(feature, layer) {
-  if (feature.properties) {
-    const props = feature.properties;
-    layer.bindPopup(buildPopup(props), { maxWidth: 300, className: 'custom-popup' });
-  }
-}
-
 function buildPopup(props) {
   // Placeholder gambar (kalau belum ada di data)
   const imgSrc = props.foto_url || "./assets/image/Logo.png";
-  
-  // Generate rating random sementara
+
+  // Generate rating random sementara (bisa diganti nanti dengan data asli)
   const rating = (Math.random() * (5 - 4) + 4).toFixed(1);
   const stars = "⭐".repeat(Math.floor(rating)) + (rating % 1 >= 0.5 ? "✨" : "");
 
@@ -254,9 +283,13 @@ function buildPopup(props) {
           Beri Ulasan
         </button>
       </div>
+        <button class="btn-comment" onclick="viewReviews('${props.nama}')">
+          Lihat Komentar & Rating
+        </button>
     </div>
   `;
 }
+
 
 // Detail popup (pakai SweetAlert2)
 function showDetail(nama, jenis, produk, gambar, rating) {
@@ -277,116 +310,125 @@ function showDetail(nama, jenis, produk, gambar, rating) {
   });
 }
 
-// === ✨ Rating & Ulasan Dinamis ===
+// === 🌟 Rating & Ulasan Dinamis — Cream Glow Theme (Clean Version) ===
 function showReviewForm(namaTempat) {
   Swal.fire({
     title: `Tulis Ulasan untuk ${namaTempat}`,
     html: `
       <div class="review-form">
-        <label>Rating:</label>
+        <label for="user-rating">Rating:</label>
         <select id="user-rating" class="swal2-select">
-          <option value="5">⭐⭐⭐⭐⭐</option>
-          <option value="4">⭐⭐⭐⭐</option>
-          <option value="3">⭐⭐⭐</option>
-          <option value="2">⭐⭐</option>
-          <option value="1">⭐</option>
+          <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+          <option value="4">⭐⭐⭐⭐ (4)</option>
+          <option value="3">⭐⭐⭐ (3)</option>
+          <option value="2">⭐⭐ (2)</option>
+          <option value="1">⭐ (1)</option>
         </select>
-        <textarea id="user-comment" class="review-text" placeholder="Tulis ulasan kamu di sini..."></textarea>
+
+        <label for="user-comment">Ulasan:</label>
+        <textarea 
+          id="user-comment" 
+          class="review-text" 
+          placeholder="Tulis ulasan kamu di sini..."
+        ></textarea>
       </div>
     `,
-    confirmButtonText: "Kirim",
+    confirmButtonText: "Kirim Ulasan",
     showCancelButton: true,
     cancelButtonText: "Batal",
     focusConfirm: false,
-    background: "rgba(25,25,35,0.95)",
-    color: "#fff",
+    confirmButtonColor: "#4a2e18",
+    cancelButtonColor: "#6f5849",
     preConfirm: () => {
-      const rating = document.getElementById('user-rating').value;
-      const comment = document.getElementById('user-comment').value.trim();
+      const rating = document.getElementById("user-rating").value;
+      const comment = document.getElementById("user-comment").value.trim();
 
       if (!comment) {
-        Swal.showValidationMessage('Ulasan tidak boleh kosong!');
+        Swal.showValidationMessage("Ulasan tidak boleh kosong!");
         return false;
       }
 
-      // return data ke .then agar result.value bisa dipakai
       return { rating, comment };
     }
   }).then((result) => {
     if (result.isConfirmed && result.value) {
       const { rating, comment } = result.value;
 
-      // simpan ke objek lokal
-      if (!reviewData[namaTempat]) reviewData[namaTempat] = [];
-      reviewData[namaTempat].push({ rating, comment });
+      // 💾 Simpan ke localStorage
+      const saved = JSON.parse(localStorage.getItem("reviews")) || {};
+      if (!saved[namaTempat]) saved[namaTempat] = [];
+      saved[namaTempat].push({
+        rating,
+        comment,
+        date: new Date().toLocaleString("id-ID")
+      });
+      localStorage.setItem("reviews", JSON.stringify(saved));
 
       Swal.fire({
         icon: "success",
-        title: "Terima kasih!",
-        text: "Ulasan kamu sudah dikirim 💬",
+        title: "Terima Kasih!",
+        text: "Ulasan kamu sudah disimpan.",
         timer: 2000,
         showConfirmButton: false,
-        background: "rgba(25,25,35,0.95)",
-        color: "#fff",
       });
     }
   });
 }
 
-// === ✨ Rating & Ulasan Dinamis (versi fix) ===
-const reviewData = {}; // Simpan ulasan lokal sementara
 
-function showReviewForm(namaTempat) {
+// === 💬 Lihat Ulasan dengan Tampilan Cream Glow ===
+function viewReviews(namaTempat) {
+  const saved = JSON.parse(localStorage.getItem("reviews")) || {};
+  const reviews = saved[namaTempat] || [];
+
+  if (reviews.length === 0) {
+    Swal.fire({
+      title: `Belum Ada Ulasan`,
+      text: `Belum ada komentar untuk ${namaTempat}. Jadilah yang pertama!`,
+      icon: "info",
+      background: "#d9c6ad",
+      color: "#4a2e18",
+      confirmButtonColor: "#4a2e18"
+    });
+    return;
+  }
+
+  const avg = (
+    reviews.reduce((sum, r) => sum + parseInt(r.rating), 0) / reviews.length
+  ).toFixed(1);
+
+  const reviewHTML = reviews.map(r => `
+    <div style="
+      margin-bottom:10px;
+      border-bottom:1px solid #bca890;
+      padding-bottom:8px;
+      background:#f6efe7;
+      border-radius:8px;
+      padding:10px;
+      box-shadow:0 0 8px #4a2e1830;">
+      <p style="margin:0;color:#4a2e18;">⭐ ${r.rating}/5</p>
+      <p style="margin:4px 0;color:#3b2615;">${r.comment}</p>
+      <small style="color:#6f5849;">${r.date}</small>
+    </div>
+  `).join("");
+
   Swal.fire({
-    title: `Tulis Ulasan untuk ${namaTempat}`,
+    title: `Ulasan untuk ${namaTempat}`,
     html: `
-      <div class="review-form">
-        <label>Rating:</label>
-        <select id="user-rating" class="swal2-select">
-          <option value="5">⭐⭐⭐⭐⭐</option>
-          <option value="4">⭐⭐⭐⭐</option>
-          <option value="3">⭐⭐⭐</option>
-          <option value="2">⭐⭐</option>
-          <option value="1">⭐</option>
-        </select>
-        <textarea id="user-comment" class="review-text" placeholder="Tulis ulasan kamu di sini..."></textarea>
+      <p style="color:#4a2e18;"><strong>Rata-Rata Rating:</strong> ⭐ ${avg}</p>
+      <div style="max-height:300px;overflow-y:auto;text-align:left;background:#f6efe7;padding:10px;border-radius:10px;">
+        ${reviewHTML}
       </div>
     `,
-    confirmButtonText: "Kirim",
-    showCancelButton: true,
-    cancelButtonText: "Batal",
-    focusConfirm: false,
-    preConfirm: () => {
-      const rating = document.getElementById('user-rating').value;
-      const comment = document.getElementById('user-comment').value.trim();
-
-      // 🚫 Validasi: pastikan ulasan gak kosong
-      if (!comment) {
-        Swal.showValidationMessage('Ulasan tidak boleh kosong!');
-        return false;
-      }
-
-      // 💾 Simpan data ulasan
-      if (!reviewData[namaTempat]) reviewData[namaTempat] = [];
-      reviewData[namaTempat].push({ rating, comment });
-
-      // ✅ return object supaya SweetAlert tahu proses berhasil
-      return { rating, comment };
-    }
-  }).then((result) => {
-    if (result.isConfirmed && result.value) {
-      Swal.fire({
-        icon: "success",
-        title: "Terima kasih!",
-        text: "Ulasan kamu sudah dikirim",
-        timer: 1800,
-        showConfirmButton: false
-      });
-
-      console.log(`📦 Ulasan tersimpan untuk ${namaTempat}:`, reviewData[namaTempat]);
-    }
+    width: 500,
+    background: "#d9c6ad",
+    color: "#4a2e18",
+    confirmButtonColor: "#4a2e18",
+    showCloseButton: true,
+    confirmButtonText: "Tutup"
   });
 }
+
 
 // --- Icon chooser ---
 function chooseIcon(feature){
@@ -395,7 +437,7 @@ function chooseIcon(feature){
   const jenis = (props.jenis || '').toString().toLowerCase();
   const nama = (props.nama || '').toString().toLowerCase();
 
-  if(role.includes('makanan khas') || /mochi|bolu|bika|sale|roti/i.test(nama)) return icons.makanan_khas;
+  if(role.includes('makanan khas') || /mochi|bolu|bika|sale|Oleh Oleh/i.test(nama)) return icons.makanan_khas;
   if(role.includes('minuman') || jenis.includes('minuman')) return icons.minuman;
   if(jenis.includes('dessert') || /puding|dessert|dimsum|roti/i.test(nama)) return icons.dessert;
   if(jenis.includes('makanan') || role.includes('makanan')) return icons.kuliner;
@@ -584,32 +626,7 @@ async function loadAllLayersWithLoading() {
   }, 1200);
 }
 
-// === 🧭 Lokasi Nyata Pengguna ===
-if (navigator.geolocation) {
-  navigator.geolocation.watchPosition(
-    (pos) => {
-      const lat = pos.coords.latitude;
-      const lng = pos.coords.longitude;
 
-      if (!window._userMarker) {
-        window._userMarker = L.marker([lat, lng], {
-          icon: L.icon({
-            iconUrl: "../assets/icons/user_location.png",
-            iconSize: [30, 30],
-          }),
-        }).addTo(map).bindTooltip("Lokasi Anda", { permanent: false });
-      } else {
-        window._userMarker.setLatLng([lat, lng]);
-      }
-    },
-    (err) => {
-      console.warn("Tidak bisa mengambil lokasi pengguna:", err.message);
-    },
-    { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 }
-  );
-} else {
-  console.warn("Geolocation tidak didukung di browser ini.");
-}
 
 // jalankan loader saat DOM siap
 document.addEventListener('DOMContentLoaded', () => {
